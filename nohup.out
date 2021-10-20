@@ -1,0 +1,9 @@
+Receiving GPS data
+An exception occurred.
+An exception occurred.
+Traceback (most recent call last):
+  File "gps-tracker.py", line 86, in <module>
+    raw_data = ser.readline()
+  File "/usr/local/lib/python3.7/dist-packages/serial/serialposix.py", line 565, in read
+    ready, _, _ = select.select([self.fd, self.pipe_abort_read_r], [], [], timeout.time_left())
+KeyboardInterrupt
