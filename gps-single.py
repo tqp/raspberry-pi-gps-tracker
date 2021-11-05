@@ -21,10 +21,11 @@ altitude_unit = ""
 speed_in_knots = ""
 speed_in_kph = ""
 
+
 def parse_gps(data):
     data = data.decode('UTF-8')
     updated_gpgga = False
-    #print("raw:", data)
+    # print("raw:", data)
 
     # Check Fix
     if (len(data) > 0) & (data[0:6] == '$GPGGA'):
@@ -37,7 +38,7 @@ def parse_gps(data):
             fix = False
 
         if fix:
-            #print("Fix: %s %s" % (fix, str(split_data)))
+            # print("Fix: %s %s" % (fix, str(split_data)))
             global utc, lat, lat_dir, lng, lng_dir, quality, num_satellite, altitude, altitude_unit
             global received_gpgga_data
             utc = split_data[1]
@@ -52,16 +53,16 @@ def parse_gps(data):
             received_gpgga_data = True
 
     if fix:
-        if ((len(data) > 0) & (data[0:6] == '$GPVTG')):
-            #print("Receiving GPVTG Data...")
+        if (len(data) > 0) & (data[0:6] == '$GPVTG'):
+            # print("Receiving GPVTG Data...")
             global speed_in_knots, speed_in_kph
             global received_gpvtg_data
             gpvtg_data = data.split(",")
-            #print("%s" % (str(gpvtg_data)))
+            # print("%s" % (str(gpvtg_data)))
             speed_in_knots = gpvtg_data[5]
             speed_in_kph = gpvtg_data[7]
             received_gpvtg_data = True
-            #print("Speed: %s/%s" % (speed_in_knots, speed_in_kph))
+            # print("Speed: %s/%s" % (speed_in_knots, speed_in_kph))
     else:
         print("Waiting for Fix...")
         time.sleep(1)
