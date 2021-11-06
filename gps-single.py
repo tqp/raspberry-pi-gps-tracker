@@ -54,11 +54,13 @@ grpmc_date_time = ""
 gprmc_epoch = ""
 
 
+
 def parse_gps(data):
     global fix
     global gpgga_split_data, gpgga_data_received
     global gpgga_quality, gpgga_num_satellite
     data = data.decode('UTF-8')
+<<<<<<< HEAD
     #print("------------")
     #print("Data Stream: " + data)
 
@@ -71,10 +73,51 @@ def parse_gps(data):
         gpgga_num_satellite = gpgga_split_data[7]
         if gpgga_quality.isdigit() & int(gpgga_quality) > 0:
             print("Found Fix!")
+=======
+    updated_gpgga = False
+    # print("raw:", data)
+
+    # Check Fix
+    if (len(data) > 0) & (data[0:6] == '$GPGGA'):
+        split_data = data.split(",")
+        status = split_data[6]
+        if status.isdigit() & int(status) > 0:
+            global fix
+>>>>>>> 618b8eda5d4521a173867e3f1d5d432d50b1adb6
             fix = True
         else:
             print("Waiting for Fix... Signal: " + gpgga_quality + ", Satellites: " + gpgga_num_satellite)
             fix = False
+<<<<<<< HEAD
+=======
+
+        if fix:
+            # print("Fix: %s %s" % (fix, str(split_data)))
+            global utc, lat, lat_dir, lng, lng_dir, quality, num_satellite, altitude, altitude_unit
+            global received_gpgga_data
+            utc = split_data[1]
+            lat = split_data[2]
+            lat_dir = split_data[3]
+            lng = split_data[4]
+            lng_dir = split_data[5]
+            quality = split_data[6]
+            num_satellite = split_data[7]
+            altitude = split_data[8]
+            altitude_unit = split_data[10]
+            received_gpgga_data = True
+
+    if fix:
+        if (len(data) > 0) & (data[0:6] == '$GPVTG'):
+            # print("Receiving GPVTG Data...")
+            global speed_in_knots, speed_in_kph
+            global received_gpvtg_data
+            gpvtg_data = data.split(",")
+            # print("%s" % (str(gpvtg_data)))
+            speed_in_knots = gpvtg_data[5]
+            speed_in_kph = gpvtg_data[7]
+            received_gpvtg_data = True
+            # print("Speed: %s/%s" % (speed_in_knots, speed_in_kph))
+>>>>>>> 618b8eda5d4521a173867e3f1d5d432d50b1adb6
     else:
         time.sleep(0)
         
