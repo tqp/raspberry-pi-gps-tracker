@@ -60,7 +60,6 @@ def parse_gps(data):
     global gpgga_split_data, gpgga_data_received
     global gpgga_quality, gpgga_num_satellite
     data = data.decode('UTF-8')
-<<<<<<< HEAD
     #print("------------")
     #print("Data Stream: " + data)
 
@@ -73,7 +72,6 @@ def parse_gps(data):
         gpgga_num_satellite = gpgga_split_data[7]
         if gpgga_quality.isdigit() & int(gpgga_quality) > 0:
             print("Found Fix!")
-=======
     updated_gpgga = False
     # print("raw:", data)
 
@@ -82,14 +80,10 @@ def parse_gps(data):
         split_data = data.split(",")
         status = split_data[6]
         if status.isdigit() & int(status) > 0:
-            global fix
->>>>>>> 618b8eda5d4521a173867e3f1d5d432d50b1adb6
             fix = True
         else:
             print("Waiting for Fix... Signal: " + gpgga_quality + ", Satellites: " + gpgga_num_satellite)
             fix = False
-<<<<<<< HEAD
-=======
 
         if fix:
             # print("Fix: %s %s" % (fix, str(split_data)))
@@ -117,7 +111,6 @@ def parse_gps(data):
             speed_in_kph = gpvtg_data[7]
             received_gpvtg_data = True
             # print("Speed: %s/%s" % (speed_in_knots, speed_in_kph))
->>>>>>> 618b8eda5d4521a173867e3f1d5d432d50b1adb6
     else:
         time.sleep(0)
         
@@ -233,7 +226,7 @@ def parse_gps(data):
         print(str_to_write)
         write_to_file(str_to_write)
         #exit()
-        time.sleep(1)
+        time.sleep(60)
 
 def write_to_file(string):
     f = open("log_" + str(gprmc_year) + str(gprmc_month) + str(gprmc_day) + ".txt", "a")
